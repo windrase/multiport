@@ -65,7 +65,7 @@ clear
 clear && clear && clear
 clear;clear;clear
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "\033[96;1m                       WINTUNELING VPN               \033[0m"
+echo -e "\033[96;1m                 WINTUNELING VPN               \033[0m"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 echo ""
 echo ""
@@ -96,11 +96,11 @@ exit 1
 fi
 if [[ $ipsaya == "" ]]; then
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "${EROR} IP Address ( ${RED}Not Detected${NC} )"
+echo -e "${EROR}           IP Address ( ${RED}Not Detected${NC} )"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 else
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "${OK}   IP Address ( ${green}$IP${NC} )"
+echo -e "${OK}            IP Address ( ${green}$IP${NC} )"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 fi
 echo ""
@@ -161,7 +161,7 @@ echo -e "${OK} ${BLUE} $1 ${FONT}"
 }
 function print_install() {
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}    [ MULAI MENGINSTAL ]  $1 ${FONT}"
+echo -e "${CYAN}   [                MULAI MENGINSTAL ]  $1 ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 1
 }
@@ -171,7 +171,7 @@ echo -e "${ERROR} ${REDBG} $1 ${FONT}"
 function print_success() {
 if [[ 0 -eq $? ]]; then
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${Green}  [ INSTALL SUCCESS ] ${FONT}"
+echo -e "${Green}  [                INSTALL SUCCESS ] ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 2
 fi
@@ -286,10 +286,10 @@ function pasang_domain() {
 echo -e ""
 clear
 echo -e "\e[94;1m╔════════════════════════════════════════════════╗ \e[0m"
-echo -e "                       \e[92;1m DOMAIN MENU \e[0m  "
+echo -e "                 \e[92;1m DOMAIN MENU \e[0m  "
 echo -e "\e[94;1m╚════════════════════════════════════════════════╝ \e[0m"
 echo -e ""
-echo -e "          \e[1;32m1)\e[0m DOMAIN SENDIRI [ REKOMEN ]"
+echo -e "          \e[1;32m1)\e[0m DOMAIN SENDIRI [ REKOMENDASI ]"
 echo -e ""
 echo -e ""
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ \e[0m"
@@ -302,7 +302,7 @@ clear
 echo ""
 echo ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "\e[1;32m                    INPUT YOUR DOMAIN $NC"
+echo -e "\e[1;32m               INPUT YOUR DOMAIN $NC"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 echo -e ""
 echo -e "\e[91;1m WARNING !! \e[0m"
@@ -904,13 +904,13 @@ clear
 echo -e ""
 echo -e ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗\e[0m"
-echo -e "\e[96;1m                 ----[ WINTUNELING VPN ]----                \e[0m"
+echo -e "\e[96;1m            ----[ WINTUNELING VPN ]----                \e[0m"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝\e[0m"
 echo ""
 echo -e "\e[95;1m  Telegram : @WintunelingVPNN \e[0m"
 echo ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗\e[0m"
-echo -e "\e[92;1m                  ----[ INSTALL SUCCESS ]----                 \e[0m"
+echo -e "\e[92;1m            ----[ INSTALL SUCCESS ]----                 \e[0m"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝\e[0m"
 echo -e ""
 echo -e " \e[93;1m•\e[0m SSH  = UDP / OPENVPN / ENHANCED / MULTI PORT "
@@ -920,7 +920,7 @@ echo -e " \e[93;1m•\e[0m TROJAN = MULTIPATCH / MULTIPORT / GRPC / TLS / WS+SSL
 echo -e " \e[93;1m•\e[0m SSR = MULTIPATCH / MULTIPORT / GRPC / TLS "
 echo -e ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗\e[0m"
-echo -e "\e[92;1m                    ----[ INFO PORT ]----                      \e[0m"
+echo -e "\e[92;1m                ----[ INFO PORT ]----                      \e[0m"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝\e[0m"
 echo -e ""
 echo -e " \e[93;1m•\e[0m WEBSOCKET / WS / NTLS   :  80,8880,8080,2082,2095,2082 "
