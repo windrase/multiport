@@ -96,11 +96,11 @@ exit 1
 fi
 if [[ $ipsaya == "" ]]; then
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "${EROR}           IP Address ( ${RED}Not Detected${NC} )"
+echo -e "${EROR}       IP Address ( ${RED}Not Detected${NC} )"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 else
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "${OK}            IP Address ( ${green}$IP${NC} )"
+echo -e "${OK}         IP Address ( ${green}$IP${NC} )"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 fi
 echo ""
@@ -161,7 +161,7 @@ echo -e "${OK} ${BLUE} $1 ${FONT}"
 }
 function print_install() {
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}   [                MULAI MENGINSTAL ]  $1 ${FONT}"
+echo -e "${CYAN}   [   MULAI MENGINSTAL ]  $1 ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 1
 }
@@ -171,7 +171,7 @@ echo -e "${ERROR} ${REDBG} $1 ${FONT}"
 function print_success() {
 if [[ 0 -eq $? ]]; then
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${Green}  [                INSTALL SUCCESS ] ${FONT}"
+echo -e "${Green}  [    INSTALL SUCCESS ] ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 2
 fi
