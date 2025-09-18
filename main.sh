@@ -161,7 +161,7 @@ echo -e "${OK} ${BLUE} $1 ${FONT}"
 }
 function print_install() {
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}               [ MULAI MENGINSTAL ]  $1 ${FONT}"
+echo -e "${CYAN}     [ MULAI MENGINSTAL ]  $1 ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 1
 }
@@ -171,7 +171,7 @@ echo -e "${ERROR} ${REDBG} $1 ${FONT}"
 function print_success() {
 if [[ 0 -eq $? ]]; then
 echo -e "${BlueBee}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${Green}              [ INSTALL SUCCESS ] ${FONT}"
+echo -e "${Green}    [ INSTALL SUCCESS ] ${FONT}"
 echo -e "${BlueBee}╚════════════════════════════════════════════════╝${NC}"
 sleep 2
 fi
@@ -302,7 +302,7 @@ clear
 echo ""
 echo ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗$NC"
-echo -e "\e[1;32m                    INPUT YOUR DOMAIN $NC"
+echo -e "\e[1;32m                 INPUT YOUR DOMAIN $NC"
 echo -e "\e[94;1m╚═════════════════════════════════════════════════╝ $NC"
 echo -e ""
 echo -e "\e[91;1m WARNING !! \e[0m"
@@ -423,8 +423,8 @@ clear
 print_install "Core Xray 1.8.1 Latest Version"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
+latest_version="$(curl -s https://api.github.com/repos/johndesu090/Project-XRay/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install.sh)" @ install -u www-data --version $latest_version
 wget -O /etc/xray/config.json "${REPO}files/config.json" >/dev/null 2>&1
 wget -O /etc/systemd/system/runn.service "${REPO}files/runn.service" >/dev/null 2>&1
 domain=$(cat /etc/xray/domain)
