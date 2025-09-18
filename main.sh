@@ -420,44 +420,71 @@ echo "& plughin Account" >>/etc/ssh/.ssh.db
 }
 function install_xray() {
 clear
-print_install "Core Xray 1.8.1 Latest Version"
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-chown www-data.www-data $domainSock_dir
-latest_version="$(curl -s https://api.github.com/repos/johndesu090/Project-XRay/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-bash -c "$(curl -L https://github.com/johndesu090/Project-XRay/raw/main/install.sh)" @ install -u www-data --version $latest_version
-wget -O /etc/xray/config.json "${REPO}files/config.json" >/dev/null 2>&1
-wget -O /etc/systemd/system/runn.service "${REPO}files/runn.service" >/dev/null 2>&1
-domain=$(cat /etc/xray/domain)
-IPVS=$(cat /etc/xray/ipvps)
-print_success "Core Xray 1.8.1 Latest Version"
-clear
-curl -s ipinfo.io/city >>/etc/xray/city
-curl -s ipinfo.io/org | cut -d " " -f 2-10 >>/etc/xray/isp
-print_install "Memasang Konfigurasi Packet"
-wget -O /etc/haproxy/haproxy.cfg "${REPO}files/haproxy.cfg" >/dev/null 2>&1
-wget -O /etc/nginx/conf.d/xray.conf "${REPO}files/xray.conf" >/dev/null 2>&1
-sed -i "s/xxx/${domain}/g" /etc/haproxy/haproxy.cfg
-sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf
-curl ${REPO}files/nginx.conf > /etc/nginx/nginx.conf
-cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/hap.pem
-chmod +x /etc/systemd/system/runn.service
-rm -rf /etc/systemd/system/xray.service.d
-cat >/etc/systemd/system/xray.service <<EOF
+sudo apt autoremove git man-db apache2 ufw exim4 firewalld snapd* -y;
+    clear
+    print_install "Memasang xray yang dibutuhkan"
+    sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+    sysctl -w net.ipv6.conf.default.disable_ipv6=1  >/dev/null 2>&1
+    sudo apt install software-properties-common -y
+    sudo add-apt-repository ppa:vbernat/haproxy-2.7 -y
+    sudo apt update && apt upgrade -y
+    # linux-tools-common util-linux  \
+    sudo apt install squid nginx zip pwgen openssl netcat bash-completion  \
+    curl socat xz-utils wget apt-transport-https dnsutils socat chrony \
+    tar wget curl ruby zip unzip p7zip-full python3-pip haproxy libc6  gnupg gnupg2 gnupg1 \
+    msmtp-mta ca-certificates bsd-mailx iptables iptables-persistent netfilter-persistent \
+    net-tools  jq openvpn easy-rsa python3-certbot-nginx p7zip-full tuned fail2ban -y
+    apt-get clean all; sudo apt-get autoremove -y
+    apt-get install lolcat -y
+    apt-get install vnstat -y
+    apt-get install cron -y
+    gem install lolcat
+
+curl -s ipinfo.io/city >> /etc/xray/city
+    curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/xray/isp
+    xray_latest="$(curl -s https://api.github.com/repos/dharak36/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+    xraycore_link="https://github.com/dharak36/Xray-core/releases/download/v$xray_latest/xray.linux.64bit"
+    curl -sL "$xraycore_link" -o xray
+    # > unzip -q xray.zip && rm -rf xray.zip
+    mv xray /usr/sbin/xray
+    print_success "Xray Core"
+    
+    cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/xray.pem
+    wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1 
+    #wget -O /usr/sbin/xray/ "${REPO}bin/xray" >/dev/null 2>&1
+    wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
+    wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
+    wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
+    wget -q -O /etc/ipserver "${REPO}server/ipserver" && bash /etc/ipserver >/dev/null 2>&1
+
+    # > Set Permission
+    chmod +x /usr/sbin/xray
+    chmod +x /usr/sbin/websocket
+    chmod 644 /etc/websocket/tun.conf
+    chmod 644 /etc/systemd/system/ws.service
+
+    # > Create Service
+    rm -rf /etc/systemd/system/xray.service.d
+    cat >/etc/systemd/system/xray.service <<EOF
+[Unit]
 Description=Xray Service
-Documentation=https://github.com
+Documentation=https://github.com/xtls
 After=network.target nss-lookup.target
+
 [Service]
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
+ExecStart=/usr/sbin/xray run -config /etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
-filesNPROC=10000
-filesNOFILE=1000000
+LimitNPROC=10000
+LimitNOFILE=1000000
+
 [Install]
 WantedBy=multi-user.target
+
 EOF
 print_success "Konfigurasi Packet"
 }
