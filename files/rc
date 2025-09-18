@@ -1,5 +1,0 @@
-REPO="https://raw.githubusercontent.com/windrase/multiport/main/"
-
-
-
-wget -O /root/.config/rclone/rclone.conf "${REPO}Cfg/rclone.conf"
