@@ -442,8 +442,8 @@ sudo apt autoremove git man-db apache2 ufw exim4 firewalld snapd* -y;
 
 curl -s ipinfo.io/city >> /etc/xray/city
     curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/xray/isp
-    xray_latest="$(curl -s https://api.github.com/repos/dharak36/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-    xraycore_link="https://github.com/dharak36/Xray-core/releases/download/v$xray_latest/xray.linux.64bit"
+    xray_latest="$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+    xraycore_link="https://github.com/XTLS/Xray-install/releases/download/v$xray_latest/xray.linux.64bit"
     curl -sL "$xraycore_link" -o xray
     # > unzip -q xray.zip && rm -rf xray.zip
     mv xray /usr/sbin/xray
