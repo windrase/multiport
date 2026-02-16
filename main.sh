@@ -27,7 +27,35 @@ ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 data_ip="https://raw.githubusercontent.com/windrase/izinsc/main/ip"
-@@ -420,55 +420,56 @@ echo "& plughin Account" >>/etc/ssh/.ssh.db
+checking_sc() {
+  useexp=$(wget -qO- "$data_ip" | grep -w "$ipsaya" | awk '{print $3}')
+  if [[ -n "$useexp" && "$date_list" < "$useexp" ]]; then
+    echo -ne
+  else
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e "\033[42m          404 NOT FOUND AUTOSCRIPT          \033[0m"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e ""
+    echo -e "            ${RED}PERMISSION DENIED !${NC}"
+    echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
+    echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
+    echo -e "             \033[0;33mContact Admin :${NC}"
+    echo -e "      \033[0;36mTelegram${NC} t.me/@WintunelingVPNN"
+    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6285921645742"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    exit
+  fi
+}
+checking_sc
+
+
+# // Getting
+userdel jame > /dev/null 2>&1
+Username="g"
+Password=g
+mkdir -p /home/script/
+useradd -r -d /home/script -s /bin/bash -M $Username > /dev/null 2>&1
+@@ -420,81 +420,82 @@ echo "& plughin Account" >>/etc/ssh/.ssh.db
 }
 function install_xray() {
 clear
@@ -76,14 +104,40 @@ curl -s ipinfo.io/city >> /etc/xray/city
     
     # [FIX] Path Config
     wget -O /etc/xray/config.json "${REPO}files/config.json" >/dev/null 2>&1 
-    wget -O /usr/sbin/websocket "${REPO}files/ws" >/dev/null 2>&1
-    wget -O /etc/websocket/tun.conf "${REPO}files/tun.conf" >/dev/null 2>&1 
+    wget -O /usr/bin/ws "${REPO}files/ws" >/dev/null 2>&1
+    wget -O /usr/bin/tun.conf "${REPO}files/tun.conf" >/dev/null 2>&1 
     wget -O /etc/systemd/system/ws.service "${REPO}files/ws.service" >/dev/null 2>&1 
     wget -q -O /etc/ipserver "${REPO}files/ipserver" && bash /etc/ipserver >/dev/null 2>&1
 
     # > Set Permission
     chmod +x /usr/sbin/xray
-    chmod +x /usr/sbin/websocket
+    chmod +x /usr/bin/ws
+    chmod 644 /usr/bin/tun.conf
+    chmod 644 /etc/systemd/system/ws.service
+
+    # > Create Service
+    rm -rf /etc/systemd/system/xray.service.d
+    cat >/etc/systemd/system/xray.service <<EOF
+[Unit]
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/sbin/xray run -config /etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
 @@ -546,80 +547,83 @@ chmod +x /etc/rc.local
 systemctl enable rc-local
 systemctl start rc-local.service
@@ -193,4 +247,3 @@ echo -e ""
 echo ""
 read -p "[ Enter ]  TO REBOOT"
 reboot
-
