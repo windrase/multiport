@@ -560,11 +560,12 @@ clear
 cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/bin/files-ip vmip
+ExecStart=/usr/bin/limit-ip vmip
 Restart=always
+RestartSec=10
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -574,11 +575,12 @@ systemctl enable vmip
 cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/bin/files-ip vlip
+ExecStart=/usr/bin/limit-ip vlip
 Restart=always
+RestartSec=10
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -588,11 +590,12 @@ systemctl enable vlip
 cat >/etc/systemd/system/trip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/bin/files-ip trip
+ExecStart=/usr/bin/limit-ip trip
 Restart=always
+RestartSec=10
 [Install]
 WantedBy=multi-user.target
 EOF
