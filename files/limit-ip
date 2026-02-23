@@ -37,7 +37,7 @@ data=( `ls /etc/kyt/limit/vmess/ip`);
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/kyt/limit/vmess/ip/$user)
-        ehh=$(cat /var/log/xray/access.log | grep -wE "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        ehh=$(grep -wE "$user" /var/log/xray/access.log | awk '{print $3}' | sed 's/tcp://g' | cut -d ":" -f 1 | sort -u);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
 			uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${user}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
@@ -62,7 +62,7 @@ data=( `ls /etc/kyt/limit/vless/ip`);
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/kyt/limit/vless/ip/$user)
-        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        ehh=$(grep "$user" /var/log/xray/access.log | awk '{print $3}' | sed 's/tcp://g' | cut -d ":" -f 1 | sort -u);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
 			uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${user}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
@@ -87,7 +87,7 @@ data=( `ls /etc/kyt/limit/trojan/ip`);
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/kyt/limit/trojan/ip/$user)
-        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        ehh=$(grep "$user" /var/log/xray/access.log | awk '{print $3}' | sed 's/tcp://g' | cut -d ":" -f 1 | sort -u);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
 			uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${user}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
